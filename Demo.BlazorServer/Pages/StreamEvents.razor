@@ -1,0 +1,103 @@
+﻿@page "/";
+@using Microsoft.AspNetCore.SignalR.Client;
+@using Twilio.EventStreamsHelpers.Services;
+
+@inject IJSRuntime JSRuntime
+@inject NavigationManager NavigationManager
+@inject StudioStateTrackingService StudioStateTrackingService
+
+
+<button @onclick="@ResetDB" class="btn btn-danger">Clear DB</button>
+
+@{
+    var activeExecutions = StudioStateTrackingService.ExecutionsInProgress.OrderByDescending(d => d.DateCreated).Select(d => d.ExecutionSid).ToList();
+    var completedExecutions = StudioStateTrackingService.ExecutionsCompleted.OrderByDescending(d => d.DateCreated).Select(d => d.ExecutionSid).ToList();
+
+    var allExecutions = new List<string>();
+    allExecutions.AddRange(activeExecutions);
+    allExecutions.AddRange(completedExecutions);
+}
+
+<table class="table">
+    <tr>
+        <th>Status</th>
+        <th>Execution</th>
+        <th>Details</th>
+    </tr>
+    @foreach (var executionSid in allExecutions)
+    {
+
+
+        <tr>
+
+            <td>
+                @if (activeExecutions.Contains(executionSid))
+                {
+                    <span class="badge badge-primary">IN PROGRESS</span>
+                }
+                else
+                {
+                    <span class="badge badge-danger">COMPLETED</span>
+
+                }
+
+
+            </td>
+            <td><span class="badge badge-light">@executionSid</span></td>
+            <td>
+                @foreach (var step in StudioStateTrackingService.Steps.Where(d => d.ExecutionSid == executionSid).ToList().OrderBy(d => d.DateCreated))
+                {
+                    @if (step.Name == "incomingCall")
+                    {
+                        <span class="badge badge-success">Execution Started (Incoming Call)</span>
+                        <span>&raquo;&nbsp;</span>
+
+                    }
+                    <span class="badge badge-secondary">@step.Name</span>
+                    <span>&raquo;</span>
+                    <span class="badge badge-primary">@step.TransitionedFrom &raquo; @step.TransitionedTo</span>
+                    <span>&raquo;&nbsp;</span>
+                    @if (step.TransitionedTo == "Ended")
+                    {
+                        <span class="badge badge-danger">Execution Ended</span>
+                    }
+                }
+            </td>
+        </tr>
+    }
+</table>
+
+
+@code {
+
+
+    private async Task ResetDB()
+    {
+        StudioStateTrackingService.Reset();
+        await JSRuntime.InvokeVoidAsync("alert", "Database reset completed");
+    }
+
+    #region Add custom SignalR
+    private HubConnection hubConnection;
+
+    protected override async Task OnInitializedAsync()
+    {
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl(NavigationManager.ToAbsoluteUri("/pushhub"))
+            .Build();
+
+        hubConnection.On("Redraw", () =>
+        {
+            StateHasChanged();
+        });
+
+        await hubConnection.StartAsync();
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        await hubConnection.DisposeAsync();
+    }
+    #endregion
+}
+

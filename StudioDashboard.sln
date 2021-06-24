@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.810.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.BlazorServer", "Demo.BlazorServer\Demo.BlazorServer.csproj", "{E448415A-AE03-4278-984D-69540A317C0F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventStreamConfig", "EventStreamConfig\EventStreamConfig.csproj", "{A66A8B50-E138-4599-9832-73703F4FB63F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Twilio.EventStreamsHelpers", "Twilio.EventStreamsHelpers\Twilio.EventStreamsHelpers.csproj", "{B7BD1B99-18A7-4437-B2D3-4295544302BE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E448415A-AE03-4278-984D-69540A317C0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E448415A-AE03-4278-984D-69540A317C0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E448415A-AE03-4278-984D-69540A317C0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E448415A-AE03-4278-984D-69540A317C0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A66A8B50-E138-4599-9832-73703F4FB63F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A66A8B50-E138-4599-9832-73703F4FB63F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A66A8B50-E138-4599-9832-73703F4FB63F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A66A8B50-E138-4599-9832-73703F4FB63F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7BD1B99-18A7-4437-B2D3-4295544302BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7BD1B99-18A7-4437-B2D3-4295544302BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7BD1B99-18A7-4437-B2D3-4295544302BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7BD1B99-18A7-4437-B2D3-4295544302BE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4566C3E0-7F7F-4A8C-9A79-0066592B4EE1}
+	EndGlobalSection
+EndGlobal
